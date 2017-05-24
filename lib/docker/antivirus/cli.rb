@@ -16,7 +16,7 @@ module Docker
         Docker::Antivirus::Helpers.atomic_mount(options[:image], directory)
         exit_status = Docker::Antivirus::Helpers.clamav_scan(options[:image], directory)
         Docker::Antivirus::Helpers.cleanup(directory)
-        if exit_status == 0
+        if exit_status.zero?
           puts "\e[32mNo virus detected\e[0m"
           exit 0
         else
@@ -29,7 +29,7 @@ module Docker
 
       def cleanup
         `rm -rf /docker-antivirus/*`
-        puts "All folders cleaned up"
+        puts 'All folders cleaned up'
       end
     end
   end

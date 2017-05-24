@@ -4,6 +4,6 @@ rvm:
 
 before_install:
  - gem install bundler
+ - apt install clamav
 
-script: bundle exec docker-antivirus
-
+script: bundle exec rspec
