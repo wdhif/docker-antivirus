@@ -1,4 +1,4 @@
-# Docker::Antivirus
+# docker-antivirus
 
 Docker Antivirus with ClamAV and Atomic
 
