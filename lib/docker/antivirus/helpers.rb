@@ -14,7 +14,7 @@ module Docker
 
       def create_directory(directory)
         puts "Creating #{directory}"
-        `mkdir -p /docker-antivirus/#{directory}`
+        `mkdir -p /tmp/docker-antivirus/#{directory}`
       end
 
       def atomic_mount(image, directory)
@@ -24,12 +24,12 @@ module Docker
 
       def clamav_scan(image, directory)
         puts "Scanning #{image} in #{directory} with ClamAV"
-        `clamscan -r --quiet /docker-antivirus/#{directory}`
+        `clamscan -r --quiet /tmp/docker-antivirus/#{directory}`
         $CHILD_STATUS.exitstatus
       end
 
       def cleanup(directory)
-        `rm -rf /docker-antivirus/#{directory}`
+        `rm -rf /tmp/docker-antivirus/#{directory}`
         puts "#{directory} cleaned up"
       end
     end

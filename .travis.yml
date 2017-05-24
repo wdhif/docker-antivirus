@@ -1,9 +1,11 @@
+sudo: required
 language: ruby
 rvm:
  - 2.2
 
 before_install:
  - gem install bundler
- - apt install clamav
+ - sudo apt install -y clamav
+ - freshclam -v
 
 script: bundle exec rspec
