@@ -1,19 +1,29 @@
 require 'spec_helper'
 
 RSpec.describe Docker::Antivirus::Helpers do
-  it 'chooses a random name' do
-    puts subject.random_folder_name
-    expect(subject.random_folder_name).not_to be nil
-  end
-  it 'creates a folder' do
-    directory = 'rspec'
-    subject.create_directory(directory)
-    expect(File.directory?("/tmp/docker-antivirus/#{directory}")).to be true
-    `rm -rf /tmp/docker-antivirus/rspec`
+  context 'Helpers' do
+    it 'chooses a random name' do
+      puts subject.random_folder_name
+      expect(subject.random_folder_name).not_to be nil
+    end
+    
+    it 'creates a folder' do
+      directory = 'rspec'
+      subject.create_directory(directory)
+      expect(File.directory?("/tmp/docker-antivirus/#{directory}")).to be true
+      `rm -rf /tmp/docker-antivirus/rspec`
+    end
+
+    it 'should delete the random directory' do
+      directory = 'rspec'
+      subject.create_directory(directory)
+      subject.cleanup(directory)
+      expect(File.directory?(directory)).to be false
+    end
   end
 
-  context 'Scanning' do
-    it 'detect viruses if present' do
+  context 'Antivirus' do
+    it 'does not detect viruses if not present' do
       image = 'rspec_image'
       directory = 'rspec'
       subject.create_directory(directory)
@@ -21,7 +31,7 @@ RSpec.describe Docker::Antivirus::Helpers do
       `rm -rf /tmp/docker-antivirus/#{directory}`
     end
 
-    it 'does not detect viruses if not present' do
+    it 'detect viruses if present' do
       image = 'rspec_image'
       directory = 'rspec'
       eicar_test_string = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
@@ -32,12 +42,5 @@ RSpec.describe Docker::Antivirus::Helpers do
       expect(subject.clamav_scan(image, directory)).to eq(1)
       `rm -rf /tmp/docker-antivirus/#{directory}`
     end
-  end
-
-  it 'should delete the random directory' do
-    directory = 'rspec'
-    subject.create_directory(directory)
-    subject.cleanup(directory)
-    expect(File.directory?(directory)).to be false
   end
 end
