@@ -28,7 +28,7 @@ module Docker
       desc 'cleanup', 'Cleanup all folders'
 
       def cleanup
-        `rm -rf /docker-antivirus/*`
+        `rm -rf /tmp/docker-antivirus/*`
         puts 'All folders cleaned up'
       end
     end

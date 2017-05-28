@@ -2,8 +2,14 @@ language: ruby
 rvm:
  - 2.2
 
-before_install:
- - gem install bundler
- - apt install clamav
+addons:
+  apt:
+    sources:
+    - lucid
+
+addons:
+  apt:
+    packages:
+    - clamav
 
 script: bundle exec rspec
