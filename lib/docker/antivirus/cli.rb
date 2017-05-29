@@ -1,4 +1,5 @@
 require 'thor'
+require 'fileutils'
 
 require 'docker/antivirus/helpers'
 

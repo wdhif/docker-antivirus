@@ -19,6 +19,10 @@ module Docker
       def atomic_mount(image, directory)
         puts "Mounting #{image} in #{@docker_antivirus_directory}/#{directory}"
         `atomic mount #{image} #{@docker_antivirus_directory}/#{directory}`
+        return 0 unless $CHILD_STATUS.exitstatus != 0
+        puts "\e[31matomic mount #{image} #{@docker_antivirus_directory}/#{directory} failed\e[0m"
+        puts "\e[31m#{@docker_antivirus_directory}/#{directory} left for debugging\e[0m"
+        exit 1
       end
 
       def clamav_scan(image, directory)
@@ -28,7 +32,7 @@ module Docker
       end
 
       def cleanup(directory)
-        `rm -rf #{@docker_antivirus_directory}#{directory}`
+        FileUtils.rm_rf("#{@docker_antivirus_directory}/#{directory}")
         puts "#{@docker_antivirus_directory}/#{directory} cleaned up"
       end
     end
