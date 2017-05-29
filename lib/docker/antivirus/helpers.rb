@@ -5,7 +5,8 @@ module Docker
     # Helpers Module
     module Helpers
       @eicar_test_string = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
-      @docker_antivirus_directory = "/tmp/docker-antivirus"
+      @docker_antivirus_directory = '/tmp/docker-antivirus'
+
       module_function
 
       def random_folder_name

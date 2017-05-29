@@ -6,7 +6,7 @@ RSpec.describe Docker::Antivirus::Helpers do
       puts subject.random_folder_name
       expect(subject.random_folder_name).not_to be nil
     end
-    
+
     it 'creates a folder' do
       directory = 'rspec'
       subject.create_directory(directory)
