@@ -1,21 +1,19 @@
 require 'English'
+require 'fileutils'
 
 module Docker
   module Antivirus
     # Helpers Module
     module Helpers
-      @eicar_test_string = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
       @docker_antivirus_directory = '/tmp/docker-antivirus'
 
       module_function
 
-      def random_folder_name
-        ('a'..'z').to_a.sample(12).join
-      end
-
-      def create_directory(directory)
+      def create_directory
+        directory = ('a'..'z').to_a.sample(12).join
         puts "Creating #{@docker_antivirus_directory}/#{directory}"
-        `mkdir -p #{@docker_antivirus_directory}/#{directory}`
+        FileUtils.mkdir_p("#{@docker_antivirus_directory}/#{directory}")
+        directory
       end
 
       def atomic_mount(image, directory)

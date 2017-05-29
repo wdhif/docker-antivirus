@@ -8,11 +8,10 @@ module Docker
     class Cli < Thor
       desc 'scan', 'Scan a docker image'
 
-      method_option :image, required: false, aliases: '-i'
+      method_option :image, required: true, aliases: '-i'
 
       def scan
-        directory = Docker::Antivirus::Helpers.random_folder_name
-        Docker::Antivirus::Helpers.create_random_directory(directory)
+        directory = Docker::Antivirus::Helpers.create_directory
         Docker::Antivirus::Helpers.atomic_mount(options[:image], directory)
         exit_status = Docker::Antivirus::Helpers.clamav_scan(options[:image], directory)
         Docker::Antivirus::Helpers.cleanup(directory)

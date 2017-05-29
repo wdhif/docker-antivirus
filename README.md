@@ -1,26 +1,32 @@
 # docker-antivirus
-[![Build Status](https://travis-ci.org/wdhif/docker-antivirus.svg?branch=master)](https://travis-ci.org/wdhif/docker-antivirus)  
+[![Build Status](https://travis-ci.org/wdhif/docker-antivirus.svg?branch=master)](https://travis-ci.org/wdhif/docker-antivirus)
+
 Docker Antivirus with ClamAV and Atomic
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'docker-antivirus'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install docker-antivirus
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+docker-antivirus help [COMMAND]                         # Describe available commands or one specific command
+docker-antivirus scan -i, --image=IMAGE                 # List the 20 last pipelines for a project
+docker-antivirus cleanup                                # Get a pipeline status
+```
+
+## Development
+
+1. Install the dependencies (for centos, atomic is in centos-extras).
+```
+yum install gcc-c++ ruby-devel coreutils clamav atomic
+```
+
+2. Install the application dependencies.
+```
+bundle install
+```
+
+3. Run the project.
+```
+bundle exec docker-antivirus help
+```
 
 ## Contributing
 
