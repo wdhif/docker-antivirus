@@ -1,17 +1,21 @@
 require 'spec_helper'
+require 'fakefs/safe'
 
 RSpec.describe Docker::Antivirus::Helpers do
   context 'Helpers' do
     it 'creates a folder' do
-      directory = subject.create_directory
-      expect(File.directory?("/tmp/docker-antivirus/#{directory}")).to be true
-      `rm -rf /tmp/docker-antivirus/rspec`
+      FakeFS do
+        directory = subject.create_directory
+        expect(File.directory?("/tmp/docker-antivirus/#{directory}")).to be true
+      end
     end
 
     it 'should delete the random directory' do
-      directory = subject.create_directory
-      subject.cleanup(directory)
-      expect(File.directory?(directory)).to be false
+      FakeFS do
+        directory = subject.create_directory
+        subject.cleanup(directory)
+        expect(File.directory?(directory)).to be false
+      end
     end
   end
 end
