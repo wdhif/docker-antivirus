@@ -13,7 +13,7 @@ RSpec.describe Docker::Antivirus::Helpers do
     it 'should delete the random directory' do
       FakeFS do
         directory = subject.create_directory
-        subject.cleanup(directory)
+        subject.cleanup(directory, false)
         expect(File.directory?(directory)).to be false
       end
     end

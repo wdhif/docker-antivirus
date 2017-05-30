@@ -2,5 +2,3 @@
 --require spec_helper
 # Running in documentation mode
 -f d
-# Excluding integration tests by default
---tag ~integration

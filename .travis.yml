@@ -2,14 +2,4 @@ language: ruby
 rvm:
  - 2.2
 
-addons:
-  apt:
-    sources:
-    - lucid
-
-addons:
-  apt:
-    packages:
-    - clamav
-
-script: bundle exec rspec
+script: bundle exec rspec --tag ~integration

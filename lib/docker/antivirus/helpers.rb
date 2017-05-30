@@ -27,11 +27,12 @@ module Docker
 
       def clamav_scan(image, directory)
         puts "Scanning #{image} in #{@docker_antivirus_directory}/#{directory} with ClamAV"
-        `clamscan -r --quiet #{@docker_antivirus_directory}/#{directory}`
+        `clamscan -r #{@docker_antivirus_directory}/#{directory}`
         $CHILD_STATUS.exitstatus
       end
 
-      def cleanup(directory)
+      def cleanup(directory, atomic = true)
+        `atomic umount #{@docker_antivirus_directory}/#{directory}` if atomic
         FileUtils.rm_rf("#{@docker_antivirus_directory}/#{directory}")
         puts "#{@docker_antivirus_directory}/#{directory} cleaned up"
       end

@@ -6,18 +6,16 @@ RSpec.describe Docker::Antivirus::Helpers, integration: true do
       image = 'rspec_image'
       directory = subject.create_directory
       expect(subject.clamav_scan(image, directory)).to eq(0)
-      `rm -rf /tmp/docker-antivirus/#{directory}`
+      subject.cleanup(directory)
     end
 
     it 'detect viruses if present' do
-      image = 'rspec_image'
-      eicar_test_string = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
+      `docker pull wdhif/docker-eicar`
+      image = 'wdhif/docker-eicar'
       directory = subject.create_directory
-      eicar_test_file = File.new("/tmp/docker-antivirus/#{directory}/eicar_test_file", 'w')
-      eicar_test_file.puts(eicar_test_string)
-      eicar_test_file.close
+      subject.atomic_mount(image, directory)
       expect(subject.clamav_scan(image, directory)).to eq(1)
-      `rm -rf /tmp/docker-antivirus/#{directory}`
+      subject.cleanup(directory)
     end
   end
 end
