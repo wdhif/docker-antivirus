@@ -3,6 +3,8 @@
 
 Docker Antivirus with ClamAV and Atomic
 
+![demo](https://cloud.githubusercontent.com/assets/5231539/26585609/e8079b36-454c-11e7-833d-621ef29d7bee.png)
+
 ## Usage
 
 ```
