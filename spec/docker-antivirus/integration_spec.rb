@@ -3,8 +3,10 @@ require 'spec_helper'
 RSpec.describe Docker::Antivirus::Helpers, integration: true do
   context 'Helper Integration' do
     it 'does not detect viruses if not present' do
-      image = 'rspec_image'
+      `docker pull busybox`
+      image = 'busybox'
       directory = subject.create_directory
+      subject.atomic_mount(image, directory)
       expect(subject.clamav_scan(image, directory)).to eq(0)
       subject.cleanup(directory)
     end
