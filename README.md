@@ -30,6 +30,13 @@ bundle install
 bundle exec docker-antivirus help
 ```
 
+## Troubleshooting
+Because of a problem with Atomic regarding the use of a newer glib2 that is not yet in the current dependancies, you can get an ostree error with python. https://github.com/projectatomic/atomic/issues/1018  
+`/usr/bin/python2: symbol lookup error: /lib64/libostree-1.so.1: undefined symbol: g_file_enumerator_iterate`  
+To fix this you just have to update glib2 to the newer version.  
+`yum update glib2`  
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/wdhif/docker-antivirus/fork )
