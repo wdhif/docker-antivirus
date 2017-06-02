@@ -2,6 +2,9 @@ PATH
   remote: .
   specs:
     docker-antivirus (0.0.1)
+      json
+      json_pure
+      thor
 
 GEM
   remote: https://rubygems.org/
@@ -49,10 +52,7 @@ DEPENDENCIES
   bundler
   docker-antivirus!
   fakefs
-  json
-  json_pure
   rake
   rspec
   rspec-mocks
   rubocop
-  thor

@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.executables   = 'docker-antivirus'
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'json'
-  spec.add_development_dependency 'json_pure'
-  spec.add_development_dependency 'thor'
+  spec.add_dependency 'json'
+  spec.add_dependency 'json_pure'
+  spec.add_dependency 'thor'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'fakefs'
