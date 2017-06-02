@@ -2,3 +2,4 @@
 --require spec_helper
 # Running in documentation mode
 -f d
+--tag ~integration
