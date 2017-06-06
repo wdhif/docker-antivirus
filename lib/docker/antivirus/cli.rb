@@ -12,6 +12,8 @@ module Docker
       method_option :image, required: true, aliases: '-i'
 
       def scan
+        puts "Pulling #{options[:image]}"
+        `docker pull #{options[:image]}`
         directory = Docker::Antivirus::Helpers.create_directory
         Docker::Antivirus::Helpers.atomic_mount(options[:image], directory)
         exit_status = Docker::Antivirus::Helpers.clamav_scan(options[:image], directory)
