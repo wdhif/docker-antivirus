@@ -9,8 +9,8 @@ Docker Antivirus with ClamAV and Atomic
 
 ```
 docker-antivirus help [COMMAND]                         # Describe available commands or one specific command
-docker-antivirus scan -i, --image=IMAGE                 # List the 20 last pipelines for a project
-docker-antivirus cleanup                                # Get a pipeline status
+docker-antivirus scan -i, --image=IMAGE                 # Scan a docker image
+docker-antivirus cleanup                                # Cleanup all folders
 ```
 
 ## Development
