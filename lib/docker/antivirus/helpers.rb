@@ -5,36 +5,29 @@ module Docker
   module Antivirus
     # Helpers Module
     module Helpers
-      @docker_antivirus_directory = '/tmp/docker-antivirus'
 
       module_function
 
       def create_directory
-        directory = ('a'..'z').to_a.sample(12).join
-        puts "Creating #{@docker_antivirus_directory}/#{directory}"
-        FileUtils.mkdir_p("#{@docker_antivirus_directory}/#{directory}")
-        directory
+        directory = Dir.mktmpdir(nil, "/tmp/docker-antivirus")
+        puts "Creating #{directory}"
+        return directory
       end
 
       def atomic_mount(image, directory)
-        puts "Mounting #{image} in #{@docker_antivirus_directory}/#{directory}"
-        `atomic mount #{image} #{@docker_antivirus_directory}/#{directory}`
-        return 0 unless $CHILD_STATUS.exitstatus != 0
-        puts "\e[31matomic mount #{image} #{@docker_antivirus_directory}/#{directory} failed\e[0m"
-        puts "\e[31m#{@docker_antivirus_directory}/#{directory} left for debugging\e[0m"
-        exit 1
+        puts "Mounting #{image} in #{directory}"
+        system("atomic mount #{image} #{directory}")
       end
 
       def clamav_scan(image, directory)
-        puts "Scanning #{image} in #{@docker_antivirus_directory}/#{directory} with ClamAV"
-        `clamscan -r #{@docker_antivirus_directory}/#{directory}`
-        $CHILD_STATUS.exitstatus
+        puts "Scanning #{image} in #{directory} with ClamAV"
+        system("clamscan -ri #{directory}")
       end
 
       def cleanup(directory, atomic = true)
-        `atomic umount #{@docker_antivirus_directory}/#{directory}` if atomic
-        FileUtils.rm_rf("#{@docker_antivirus_directory}/#{directory}")
-        puts "#{@docker_antivirus_directory}/#{directory} cleaned up"
+        system("atomic umount #{directory}") if atomic
+        FileUtils.rm_rf("#{directory}")
+        puts "#{directory} cleaned up"
       end
     end
   end

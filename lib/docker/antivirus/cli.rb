@@ -17,15 +17,18 @@ module Docker
           puts "Pulling #{options[:image]}"
           `docker pull #{options[:image]}`
         end
-        directory = Docker::Antivirus::Helpers.create_directory
-        Docker::Antivirus::Helpers.atomic_mount(options[:image], directory)
-        exit_status = Docker::Antivirus::Helpers.clamav_scan(options[:image], directory)
-        Docker::Antivirus::Helpers.cleanup(directory)
-        if exit_status.zero?
-          puts "\e[32mNo virus detected\e[0m"
+        begin
+          directory = Docker::Antivirus::Helpers.create_directory
+          Docker::Antivirus::Helpers.atomic_mount(options[:image], directory)
+          result = Docker::Antivirus::Helpers.clamav_scan(options[:image], directory)
+        ensure
+          Docker::Antivirus::Helpers.cleanup(directory)
+        end
+        if result
+          puts "\e[32mNo virus detected in #{options[:image]}\e[0m"
           exit 0
         else
-          puts "\e[31m!!! Virus detected !!!\e[0m"
+          puts "\e[31mVirus detected in #{options[:image]}\e[0m"
           exit 1
         end
       end
@@ -33,7 +36,7 @@ module Docker
       desc 'cleanup', 'Cleanup all folders'
 
       def cleanup
-        `rm -rf /tmp/docker-antivirus/*`
+        FileUtils.rm_rf("/tmp/docker-antivirus/*")
         puts 'All folders cleaned up'
       end
     end
