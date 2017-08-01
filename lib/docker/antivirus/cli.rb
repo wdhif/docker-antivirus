@@ -15,7 +15,7 @@ module Docker
       def scan
         if options[:pull]
           puts "Pulling #{options[:image]}"
-          `docker pull #{options[:image]}`
+          system("docker pull #{options[:image]}")
         end
         begin
           directory = Docker::Antivirus::Helpers.create_directory
@@ -36,7 +36,7 @@ module Docker
       desc 'cleanup', 'Cleanup all folders'
 
       def cleanup
-        FileUtils.rm_rf("/tmp/docker-antivirus/*")
+        FileUtils.rm_rf('/tmp/docker-antivirus/*')
         puts 'All folders cleaned up'
       end
     end

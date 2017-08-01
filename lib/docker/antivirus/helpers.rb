@@ -5,13 +5,13 @@ module Docker
   module Antivirus
     # Helpers Module
     module Helpers
-
       module_function
 
       def create_directory
-        directory = Dir.mktmpdir(nil, "/tmp/docker-antivirus")
+        FileUtils.mkdir_p('/tmp/docker-antivirus')
+        directory = Dir.mktmpdir(nil, '/tmp/docker-antivirus')
         puts "Creating #{directory}"
-        return directory
+        directory
       end
 
       def atomic_mount(image, directory)
@@ -21,12 +21,12 @@ module Docker
 
       def clamav_scan(image, directory)
         puts "Scanning #{image} in #{directory} with ClamAV"
-        system("clamscan -ri #{directory}")
+        system("clamscan -r -i #{directory}")
       end
 
       def cleanup(directory, atomic = true)
         system("atomic umount #{directory}") if atomic
-        FileUtils.rm_rf("#{directory}")
+        FileUtils.rm_rf(directory.to_s)
         puts "#{directory} cleaned up"
       end
     end
