@@ -12,6 +12,12 @@ docker-antivirus scan -i, --image=IMAGE                 # Scan a docker image
 docker-antivirus cleanup                                # Cleanup all folders
 ```
 
+If for some reason the temporary directories are not correctly deleted, you can add this command to your cron file
+```
+find /tmp/docker-antivirus/* -type d -mtime +10 -exec umount {} + -exec rm -rf {} +
+```
+This command with find all subdirectories inside `/tmp/docker-antivirus` with a modification date older than 10 days. Those directories will be unmounted and then deleted.
+
 ## Development
 
 1. Install the dependencies (for centos, atomic is in centos-extras).
