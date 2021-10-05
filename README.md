@@ -1,5 +1,4 @@
 # docker-antivirus
-[![Build Status](https://travis-ci.org/wdhif/docker-antivirus.svg?branch=master)](https://travis-ci.org/wdhif/docker-antivirus)
 
 Docker Antivirus with ClamAV and Atomic
 
