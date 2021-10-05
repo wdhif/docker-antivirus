@@ -1,4 +1,5 @@
 # docker-antivirus
+![](https://github.com/wdhif/docker-antivirus/actions/workflows/main.yml/badge.svg)
 
 Docker Antivirus with ClamAV and Atomic
 
